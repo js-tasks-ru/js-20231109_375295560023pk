@@ -7,7 +7,7 @@ export function invertObj(obj) {
     if (obj === undefined) return undefined
 
     const newObj = {}
-    Object.entries(obj).forEach(([key, value], idx, arr) => {
+    Object.entries(obj).forEach(([key, value]) => {
         newObj[value] = key
     })
 

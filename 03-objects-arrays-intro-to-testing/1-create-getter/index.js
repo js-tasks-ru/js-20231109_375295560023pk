@@ -5,6 +5,7 @@
  */
 export function createGetter(path) {
     return function(obj) {
+        if (Object.keys(obj).length === 0) return undefined
         for (let key of path.split('.')) {
             obj = obj?.[key]
         }
