@@ -8,6 +8,8 @@ export function createGetter(path) {
         if (Object.keys(obj).length === 0) return undefined
 
         for (const key of path.split('.')) {
+            if (!obj) return
+            
             obj = obj?.[key]
         }
         
