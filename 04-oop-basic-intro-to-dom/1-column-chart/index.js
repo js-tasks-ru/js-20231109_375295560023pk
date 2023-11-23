@@ -1,5 +1,4 @@
 export default class ColumnChart {
-  ;
   
   constructor({data = [], label = '', value = 0, link = '', formatHeading} = {}) {
     this.data = data
