@@ -1,5 +1,5 @@
 export default class ColumnChart {
-  element = document.createElement("div");
+  ;
   
   constructor({data = [], label = '', value = 0, link = '', formatHeading} = {}) {
     this.data = data
@@ -14,12 +14,21 @@ export default class ColumnChart {
       this.formatedValue = new Intl.NumberFormat('en').format(this.value)
     }
 
-    this.element.classList.add('column-chart')
-    if (this.data?.length === 0) this.element.classList.add('column-chart_loading')
-    this.element.style.setProperty('--chart-height', this.chartHeight)
+    this.element = this.getElement()
 
-    this.element.innerHTML = this.createTemplate()
+  }
 
+  getElement() {
+    const element = document.createElement("div")
+
+    element.classList.add('column-chart')
+    element.style.setProperty('--chart-height', this.chartHeight)
+
+    if (this.data?.length === 0) element.classList.add('column-chart_loading')
+
+    element.innerHTML = this.createTemplate()
+
+    return element
   }
   
   update(newData) {
@@ -32,33 +41,33 @@ export default class ColumnChart {
     return `
       <div class="column-chart__title">
             Total ${this.label}
-            ${this.getLink()}
+            ${this.getLinkTemplate()}
         </div>
         <div class="column-chart__container">
             <div data-element="header" class="column-chart__header">${this.formatHeading ? this.formatHeading(this.formatedValue) : this.value}</div>
             <div data-element="body" class="column-chart__chart">
-                ${this.generateColumns()}
+                ${this.createColumnsTemplate()}
             </div>
       </div>`
   }
   
-  getLink() {
+  getLinkTemplate() {
     return this.link ? `<a href="${this.link}" class="column-chart__link">View all</a>` : ''
   }
   
-  generateColumns() {
+  createColumnsTemplate() {
     const columns = []
     const maximum = Math.max(...this.data)
   
     for (let item of this.data) {
-      columns.push(`<div style="--value: ${Math.floor(item * 50 / maximum)}" data-tooltip="${Math.round(item * 100 / maximum)}%"></div>`);
+      columns.push(`<div style="--value: ${Math.floor(item * this.chartHeight / maximum)}" data-tooltip="${Math.round(item * 100 / maximum)}%"></div>`);
     }
   
     return columns.join('');
   }
 
   destroy() {
-    this.element = null
+    this.remove()
   }
 
   remove() {
