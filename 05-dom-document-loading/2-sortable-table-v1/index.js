@@ -139,13 +139,28 @@ export default class SortableTable {
   }
 
   sort(fieldValue, orderValue) {
+    this.modifyArrowForSorted(fieldValue, orderValue)
+
+    const sortedData = this.sortData(fieldValue, orderValue)
+
+    const body = this.element.querySelector('[data-element="body"]')
+    body.innerHTML = null
+
+    for (const product of sortedData) {
+      body.append(this.createProductRowElement(product, this.headerConfig))
+    }
+  }
+
+  modifyArrowForSorted(fieldValue, orderValue) {
     this.clearDataOrderAttribure(this.element.querySelectorAll('.sortable-table__cell[data-order]'))
 
     const sortedColumn = this.element.querySelector(`.sortable-table__cell[data-id="${fieldValue}"]`)
     sortedColumn.setAttribute('data-order', orderValue)
     sortedColumn.append(this.createArrowElement())
+  }
 
-    const sortedData = this.data.sort((a, b) => {
+  sortData(fieldValue, orderValue) {
+    return this.data.sort((a, b) => {
       const order = orderValue === 'asc' ? 1 : -1
 
       if (fieldValue === 'date') {
@@ -165,13 +180,6 @@ export default class SortableTable {
       
       return (a[fieldValue] - b[fieldValue]) * order
     })
-
-    const body = this.element.querySelector('[data-element="body"]')
-    body.innerHTML = null
-
-    for (const product of sortedData) {
-      body.append(this.createProductRowElement(product, this.headerConfig))
-    }
   }
 
   destroy() {

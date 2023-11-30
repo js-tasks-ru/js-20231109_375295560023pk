@@ -34,6 +34,9 @@ export default class NotificationMessage {
   }
 
   show(targetElement) {
+    const notification = document.querySelector('.notification')
+    if (notification) notification.remove()
+
     if (targetElement) {
       targetElement.append(this.element)
       document.body.append(targetElement)
