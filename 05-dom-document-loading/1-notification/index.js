@@ -1,4 +1,6 @@
 export default class NotificationMessage {
+  static showedElement = null
+
   constructor(message = 'Hello World', config = {
     duration: 2000,
     type: 'success'
@@ -8,6 +10,7 @@ export default class NotificationMessage {
     this.type = config?.type ?? 'success'
 
     this.element = this.getElement(this.message, this.type, this.duration)
+    this.messagesQueue = []
   }
 
   getElement(message, type, duration) {
@@ -34,8 +37,8 @@ export default class NotificationMessage {
   }
 
   show(targetElement) {
-    const notification = document.querySelector('.notification')
-    if (notification) notification.remove()
+    if (NotificationMessage.showedElement) NotificationMessage.showedElement.remove()
+    NotificationMessage.showedElement = this.element
 
     if (targetElement) {
       targetElement.append(this.element)
