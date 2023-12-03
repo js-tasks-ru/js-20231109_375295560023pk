@@ -55,4 +55,9 @@ export default class SortableTable extends SortableTableV1 {
   sortOnClient() {
     super.sort(this.sorted.id, this.sorted.order)
   }
+
+  destroy() {
+    this.element.removeEventListener('pointerdown', this.headerClickHandler.bind(this))
+    super.destroy()
+  }
 }
