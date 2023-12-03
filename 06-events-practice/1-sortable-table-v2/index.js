@@ -14,7 +14,7 @@ export default class SortableTable extends SortableTableV1 {
 
     super.sort(this.sorted.id, this.sorted.order)
 
-    this.addHeaderClickHandler(this.element)
+    this.addHeaderListener(this.element)
   }
   
   headerClickHandler(event) {
@@ -40,7 +40,7 @@ export default class SortableTable extends SortableTableV1 {
     return 'asc'
   }
 
-  addHeaderClickHandler(element) {
+  addHeaderListener(element) {
     element.querySelector('.sortable-table__header').addEventListener('pointerdown', this.headerClickHandler.bind(this))
   }
 
