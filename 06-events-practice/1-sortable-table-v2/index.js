@@ -18,9 +18,7 @@ export default class SortableTable extends SortableTableV1 {
   }
   
   headerClickHandler(event) {
-    let headerCell = event.target
-    
-    if (event.target.localName === 'span') headerCell = event.target.parentElement
+    let headerCell = event.target.closest('.sortable-table__header')
 
     const columnId = headerCell.getAttribute('data-id')
     const columnSortable = this.headerConfig.find(item => item.id === columnId).sortable
