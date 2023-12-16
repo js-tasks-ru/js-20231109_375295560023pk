@@ -1,4 +1,4 @@
-export class SortableTable {
+export default class SortableTable {
   constructor(headerConfig = [], data = []) {
 
     this.headerConfig = headerConfig
