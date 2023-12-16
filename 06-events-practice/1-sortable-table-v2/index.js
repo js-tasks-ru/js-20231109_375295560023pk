@@ -1,4 +1,4 @@
-import { SortableTable as SortableTableV1 } from '../../05-dom-document-loading/2-sortable-table-v1/index.js'
+import SortableTableV1 from '../../05-dom-document-loading/2-sortable-table-v1/index.js'
 
 export default class SortableTable extends SortableTableV1 {
   constructor(headersConfig = [], {
@@ -17,8 +17,8 @@ export default class SortableTable extends SortableTableV1 {
     this.addHeaderListener(this.element)
   }
   
-  headerClickHandler(event) {
-    let headerCell = event.target.closest('.sortable-table__header')
+  headerClickHandler = (event) => {
+    let headerCell = event.target.closest('.sortable-table__cell')
 
     const columnId = headerCell.getAttribute('data-id')
     const columnSortable = this.headerConfig.find(item => item.id === columnId).sortable
@@ -39,7 +39,7 @@ export default class SortableTable extends SortableTableV1 {
   }
 
   addHeaderListener(element) {
-    element.querySelector('.sortable-table__header').addEventListener('pointerdown', this.headerClickHandler.bind(this))
+    element.querySelector('.sortable-table__header').addEventListener('pointerdown', this.headerClickHandler)
   }
 
   sort () {
@@ -55,7 +55,7 @@ export default class SortableTable extends SortableTableV1 {
   }
 
   destroy() {
-    this.element.removeEventListener('pointerdown', this.headerClickHandler.bind(this))
+    this.element.removeEventListener('pointerdown', this.headerClickHandler)
     super.destroy()
   }
 }
